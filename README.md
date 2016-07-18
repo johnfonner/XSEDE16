@@ -18,11 +18,11 @@ To participate in the workshop activities, you will need:
 |---------------|------------------------------------------------------------------------------------------|-------------|
 |  1:00 -  1:20 | [Overview and introductions (Presentation and Discussion)](intro.pdf)                    | Rion Dooley |
 |  1:20 -  1:40 | [Connect laptops to online resources (Hands-on)](connect.md)                             | John Fonner |
-|  1:40 -  2:00 | [The Agave API (Presentation)](overview.pdf)                                                 | John Fonner |
-|  2:00 -  2:45 | [Hacking session 1: Systems and Data movement (Hands-on)](systems.md)                    | Rion Dooley |
-|  2:45 -  3:00 | Break                                                                                    |             |
-|  3:00 -  3:45 | [Hacking session 2: Scalable Analyses (Hands-on)](apps.md)                               | John Fonner |
-|  3:45 -  4:15 | [Workflow example (Hands-on)](workflow.md)                                               | John Fonner |
-|  4:15 -  4:45 | [Fun features]()                                                                         | Rion Dooley |
+|  1:40 -  2:00 | [The Agave API (Presentation)](overview.pdf)                                             | John Fonner |
+|  2:00 -  2:45 | [Hacking session 1: Systems and Data movement (Hands-on)](systems.md)                    | John Fonner |
+|  2:45 -  3:00 | Agave ToGo: [togo.agaveapi.co](togo.agaveapi.co)                                         | Rion Dooley |
+|  3:00 -  3:30 | Afternoon Break                                                                          |             |
+|  3:30 -  4:15 | [Hacking session 2: Scalable Analyses (Hands-on)](apps.md)                               | John Fonner |
+|  4:15 -  4:45 | Advanced Capabilities Demo                                                               | Rion Dooley |
 |  4:45 -  5:00 | Q&A and Closing thoughts                                                                 |             |
 

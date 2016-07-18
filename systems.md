@@ -143,7 +143,7 @@ Execution systems in Agave are very similar to storage systems.  They just have 
             "maxNodes": 256,
             "maxProcessorsPerNode": 16,
             "maxMemoryPerNode": "32GB",
-            "customDirectives": "-A TRAINING-OPEN",
+            "customDirectives": "-A TRAINING-OPEN --reservation XSEDE_2016_4",
             "maxRequestedTime": "48:00:00"
         },
         {
@@ -242,7 +242,7 @@ Data movement between systems can become tricky when you start dealing with diff
 
 * one Docker container with our Jupyter Notebook (if you were developing locally, this would represent your own laptop) communicating via HTTPS that is using our Agave credentials through OAuth2
 * Stampede at TACC communicating via SSH using a demo account
-* and a public storage system on Corral, which is a multi-petabyte GPFS filesystem at TACC.
+* and a public storage system using a community account on Corral, which is a multi-petabyte GPFS filesystem at TACC.
 
 ## Data movement
 
@@ -279,7 +279,7 @@ files-import -U https://raw.githubusercontent.com/johnfonner/XSEDE16/master/syst
 And finally, we can move our own files between Agave systems by specifying the source with the "agave://" notation.  Try moving system.md from our Stampede system to the shared Corral system
 
 ```
-files-import -U agave://stampede-storage-XSEDE16-${USERNAME}/systems.md -S corral.demo ${USERNAME}/
+files-import -U agave://storage.xsede16/demo.txt -S stampede-storage-XSEDE16-${USERNAME} /work/0002/${USERNAME}
 ```
 
 ## Hands-on

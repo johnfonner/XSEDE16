@@ -7,7 +7,7 @@ Agave keeps a registry of apps that you can list and search.  The Apps service p
 
 ## Registering an app  
 
-Registering an app with the Apps service is conceptually simple. Just describe your app as a JSON document and POST it to the Apps service. Historically, this has actually been the hardest part for new users to figure out. So, to ease the process, we've created a couple tools that you can use to define your apps. The first is the <a href="http://agaveapi.co/tools/app-builder/" title="App Builder">App Builder</a> page. On this page you will find a form-driven wizard that you can fill out generate the JSON description for your app. Once created, you can POST the JSON directly to the Apps service. If you are new to app registration, this is a great place to start because it shrinks the learning curve involved in defining your app. 
+Registering an app with the Apps service is conceptually simple. Just describe your app as a JSON document and POST it to the Apps service. Historically, this has actually been the hardest part for new users to figure out. So, to ease the process, we've created a couple of tools that you can use to define your apps. The first is the <a href="http://togo.agaveapi.co/app/#/apps/new" title="Agave ToGo App Builder">Agave ToGo App Builder</a> page (you may need to login to [togo.agaveapi.co](togo.agaveapi.co) for the link to work). On this page you will find a form-driven wizard that you can fill out generate the JSON description for your app. Once created, you can POST the JSON directly to the Apps service. If you are new to app registration, this is a great place to start because it shrinks the learning curve involved in defining your app. 
 
 The second tool is the <a href="https://bitbucket.org/taccaci/agave-samples/" title="Agave Samples Repository" target="_blank">Agave Samples</a> project. The Agave Samples project is a set of sample data that cover a lot of use cases. The project contains several app definitions ranging in complexity from a trivial no-parameter, no-argument hello world, to a complex multi-input application with multiple parameter types. The Agave Samples project is a great place to start when building your app by hand because it draws on the experiences of many successful application publishers. 
 
@@ -52,26 +52,28 @@ Within a wrapper script, you can reference the ID of any Agave input or paramete
 Create a file `test.txt`
 
 ```sh
-exit 0
+query1="testInput.txt"
 ```
 
 ### The app description
 
-Below is a simple app description that takes a single file and no parameters as input and creates one file as output.  The app description we give to Agave can be simpler than what is below, but a number of optional fields were included to demonstrate their use.
+Below is a simple app description that takes a single file and no parameters as input and creates one file as output.  The app description we give to Agave can be simpler than what is below, but a number of optional fields were included to demonstrate their use.  
+
+Save the following JSON to "app.txt"
 
 ```json
 {  
-   "name":"akes2016-wc-USERNAME",
+   "name":"XSEDE16-wc-${USERNAME}",
    "version":"1.0",
    "label":"Linux wc utility",
    "shortDescription":"Count words in a file",
    "longDescription":"",
    "tags":[ "gnu", "textutils" ],
-   "deploymentSystem":"data.iplantcollaborative.org",
-   "deploymentPath":"CYVERSE-USERNAME/applications/wc",
+   "deploymentSystem":"stampede-storage-XSEDE16-${USERNAME}",
+   "deploymentPath":"./wc/",
    "templatePath":"/wrapper.txt",
    "testPath":"/test.txt",
-   "executionSystem":"akes2016-exec-USERNAME",
+   "executionSystem":"stampede-XSEDE16-${USERNAME}",
    "executionType":"HPC",
    "parallelism":"SERIAL",
    "modules":[],
@@ -82,7 +84,7 @@ Below is a simple app description that takes a single file and no parameters as 
             "label":"File to count words in: ",
             "description":"",
             "argument":null,
-            "showArgument":false,
+            "showArgument":false
          },
          "semantics":{  
             "fileTypes":[ "text-0" ],
@@ -90,7 +92,7 @@ Below is a simple app description that takes a single file and no parameters as 
             "ontology":[ "http://sswapmeet.sswap.info/util/TextDocument" ]
          },
          "value":{  
-            "default":"test/input.txt",
+            "default":"testInput.txt",
             "order":0,
             "required":false,
             "validator":"",
@@ -136,15 +138,12 @@ Looking at some of the important keywords:
 Once you have an application bundle ready to go, upload it to its storage host, then register the app with the following CLI commands:
 
 ```
-files-upload -F BUNDLEDIR CYVERSE-USERNAME/applications
+files-upload -F BUNDLEDIR -S stampede-XSEDE16-${USERNAME} ./
 apps-addupdate -F BUNDLEDIR/app.txt
 ```
 
-Agave will check the app description, look for the app bundle on the deploymentSystem, and if everything passes, make it available to run jobs against.
+In this case, "BUNDLEDIR" would be "wc".  Agave will check the app description, look for the app bundle on the deploymentSystem, and if everything passes, make it available to run jobs against.
 
-## Upload a file to count words
-
-`files-import -U https://bitbucket.org/taccaci/agave-samples/raw/57442c86c6a30615400493186ecc2a34b2f15895/apps/pyplot-demo/basic/pyplot-demo-basic-0.1.0/test/testdata.csv -S akes2016-storage-teacher2`
 
 ## Running a job
 
@@ -153,16 +152,16 @@ Once you have at least one app registered, you can start running jobs.  To run a
 ```
 {
   "name":"test-wc-job",
-  "appId": "akes2016-wc-USERNAME-1.0",
-  "executionSystem": "akes2016-exec-USERNAME",
-  "batchQueue": "sb.q",
+  "appId": "XSEDE16-wc-${USERNAME}-1.0",
+  "executionSystem": "stampede-XSEDE16-${USERNAME}",
+  "batchQueue": "normal-mic",
   "maxRunTime": "00:10:00",
   "nodeCount": 1,
   "processorsPerNode": 1,
   "archive": true,
-  "archiveSystem": "akes2016-storage-USERNAME",
+  "archiveSystem": "stampede-storage-XSEDE16-${USERNAME}",
   "inputs": {
-    "query1": "agave://akes2016-storage-USERNAME/input1.txt"
+    "query1": "agave://corral.xsede16/gettysburg.txt"
   },
   "parameters": {
   },

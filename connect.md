@@ -18,7 +18,7 @@ Once you have a notebook, test that everything is working with this command:
 systems-list
 ```
 
-You should get a list of some system names such as "corral.tacc.utexas.edu".
+You should get a list of a few system names such as "storage.xsede16".
 
 
 # Resources for working with the Agave API on your own 
