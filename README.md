@@ -18,7 +18,7 @@ To participate in the workshop activities, you will need:
 |---------------|------------------------------------------------------------------------------------------|-------------|
 |  1:00 -  1:20 | [Overview and introductions (Presentation and Discussion)](intro.pdf)                    | Rion Dooley |
 |  1:20 -  1:40 | [Connect laptops to online resources (Hands-on)](connect.md)                             | John Fonner |
-|  1:40 -  2:00 | [The Agave API (Presentation)](APIs.pdf)                                                 | John Fonner |
+|  1:40 -  2:00 | [The Agave API (Presentation)](overview.pdf)                                                 | John Fonner |
 |  2:00 -  2:45 | [Hacking session 1: Systems and Data movement (Hands-on)](systems.md)                    | Rion Dooley |
 |  2:45 -  3:00 | Break                                                                                    |             |
 |  3:00 -  3:45 | [Hacking session 2: Scalable Analyses (Hands-on)](apps.md)                               | John Fonner |
