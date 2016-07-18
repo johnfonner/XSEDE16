@@ -10,25 +10,31 @@ Storage systems tell Agave where data resides.  You can store files for running 
 
 ```json
 {
-  "id": "akes2016-storage-USERNAME",
-  "name": "Storage on my Jestream VM during AKES 2016",
-  "type": "STORAGE",
-  "description": "A shared system with only 120GB of disk space. Only small files should go here.",
-  "site": "jetstream-cloud.org",
-  "storage": {
-    "host": "js-18-186.jetstream-cloud.org",
-    "port": 22,
-    "protocol": "SFTP",
-    "rootDir": "/",
-    "homeDir": "/home/USERNAME",
-    "auth": {
-      "username": "USERNAME",
-      "password": "CHANGME",
-      "type": "PASSWORD"
+    "id": "stampede-storage-XSEDE16-${USERNAME}",
+    "name": "TACC Stampede Storage (${USERNAME})",
+    "description": "The Stampede supercomputer at TACC",
+    "site": "tacc.xsede.org",
+    "type": "STORAGE",
+    "storage": {
+        "host": "stampede.tacc.utexas.edu",
+        "port": 22,
+        "protocol": "SFTP",
+        "rootDir": "/",
+        "homeDir": "/home1/0002/${USERNAME}",
+        "auth": {
+            "username": "${USERNAME}",
+            "password": "${PASSWORD}",
+            "type": "PASSWORD"
+        }
     }
-  }
 }
 ```
+
+---
+
+**Note: When possible you should not use username/password to login!  Agave supports SSH Keys and several other better authentication mechanisms listed below.  For this training we use username and password since it requires no setup and these systems are temporary.**
+
+---
 
 Let's go through the key items one-by-one:
 * **id** - this is the unique name that you will use with Agave to use your system.  It must be unique across the entire Agave tenant, so unless you are an admin creating public system, you should probably put your username somewhere in there. You shouldn't use spaces in the system ID.
@@ -51,50 +57,153 @@ Execution systems in Agave are very similar to storage systems.  They just have 
 
 ```json
 {
-  "id": "akes2016-exec-demo24",
-  "name": "Execution on my Jestream VM during AKES 2016",
-  "status": "UP",
-  "type": "EXECUTION",
-  "description": "Execution system using ssh to for processes on the VM.",
-  "site": "jetstream-cloud.org",
-  "executionType": "CLI",
-  "scheduler": "FORK",
-  "environment": null,
-  "maxSystemJobsPerUser": 1,
-  "scratchDir": "/home/demo24",
-  "queues": [ {
-    "name": "sb.q",
-    "maxJobs": 1,
-    "maxUserJobs": 1,
-    "maxNodes": 1,
-    "maxMemoryPerNode": "6GB",
-    "maxProcessorsPerNode": 1,
-    "maxRequestedTime": "01:00:00",
-    "customDirectives": null,
-    "default": true
-  }],
-  "login": {
-    "host": "js-18-186.jetstream-cloud.org",
-    "port": 22,
-    "protocol": "SSH",
-    "auth": {
-      "username": "demo24",
-      "password": "24demo",
-      "type": "PASSWORD"
-    }
-  },
-  "storage": {
-    "host": "js-18-186.jetstream-cloud.org",
-    "port": 22,
-    "protocol": "SFTP",
-    "rootDir": "/",
-    "homeDir": "/home/demo24",
-    "auth": {
-      "username": "demo24",
-      "password": "24demo",
-      "type": "PASSWORD"
-    }
-  }
+    "id": "stampede-XSEDE16-${USERNAME}",
+    "name": "TACC Stampede (${USERNAME})",
+    "description": "The Stampede supercomputer at TACC",
+    "site": "tacc.xsede.org",
+    "public": false,
+    "status": "UP",
+    "type": "EXECUTION",
+    "executionType": "HPC",
+    "startupScript": "",
+    "environment": null,
+    "login": {
+        "auth": {
+            "username": "${USERNAME}",
+            "password": "${PASSWORD}",
+            "type": "PASSWORD"
+        },
+        "host": "stampede.tacc.utexas.edu",
+        "port": 22,
+        "protocol": "SSH"
+    },
+    "maxSystemJobs": 50,
+    "maxSystemJobsPerUser": 50,
+    "queues": [
+        {
+            "name": "development",
+            "default": true,
+            "maxJobs": 1,
+            "maxUserJobs": 1,
+            "maxNodes": 16,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "02:00:00"
+        },
+        {
+            "name": "gpu-dev",
+            "default": false,
+            "maxJobs": 6,
+            "maxUserJobs": 1,
+            "maxNodes": 4,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "04:00:00"
+        },
+        {
+            "name": "gpu",
+            "default": false,
+            "maxJobs": 12,
+            "maxUserJobs": 4,
+            "maxNodes": 32,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "24:00:00"
+        },
+        {
+            "name": "normal",
+            "default": false,
+            "maxJobs": 12,
+            "maxUserJobs": 4,
+            "maxNodes": 256,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "48:00:00"
+        },
+        {
+            "name": "serial",
+            "default": false,
+            "maxJobs": 16,
+            "maxUserJobs": 4,
+            "maxNodes": 1,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "12:00:00"
+        },
+        {
+            "name": "normal-mic",
+            "default": false,
+            "maxJobs": 12,
+            "maxUserJobs": 4,
+            "maxNodes": 256,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "48:00:00"
+        },
+        {
+            "name": "serial",
+            "default": false,
+            "maxJobs": 16,
+            "maxUserJobs": 4,
+            "maxNodes": 1,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "12:00:00"
+        },
+        {
+            "name": "normal-2mic",
+            "default": false,
+            "maxJobs": 12,
+            "maxUserJobs": 4,
+            "maxNodes": 256,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "48:00:00"
+        },
+        {
+            "name": "serial",
+            "default": false,
+            "maxJobs": 16,
+            "maxUserJobs": 4,
+            "maxNodes": 1,
+            "maxProcessorsPerNode": 16,
+            "maxMemoryPerNode": "32GB",
+            "customDirectives": "-A TRAINING-OPEN",
+            "maxRequestedTime": "12:00:00"
+        },
+        {
+            "name": "largemem",
+            "maxRequestedTime": "48:00:00",
+            "default": false,
+            "maxJobs": 4,
+            "maxUserJobs": 2,
+            "maxNodes": 2,
+            "maxProcessorsPerNode": 32,
+            "maxMemoryPerNode": "1000GB",
+            "customDirectives": "-A TRAINING-OPEN"
+        }
+    ],
+    "storage": {
+        "host": "stampede.tacc.utexas.edu",
+        "port": 22,
+        "protocol": "SFTP",
+        "rootDir": "/",
+        "homeDir": "/home1/0002/${USERNAME}",
+        "auth": {
+            "username": "${USERNAME}",
+            "password": "${PASSWORD}",
+            "type": "PASSWORD"
+        }
+    },
+    "workDir": "/work/0002/${USERNAME}"
 }
 ```
 
@@ -131,46 +240,46 @@ Before we move on to data, take some time to look at the other systems-* command
 
 Data movement between systems can become tricky when you start dealing with different protocols (iRODS, ssh, etc.) and different login credentials for each system.  So let's jump in and look at just that use case. We have:
 
-* one Docker container with our Jupyter Notebook (if you were developing locally, this would represent your own laptop) communicating via HTTPS that is using our Cyverse credentials through OAuth2
-* a host on Jetstream communicating via SSH using a demo account
-* and the Cyverse DataStore is a multi-petabyte iRODS filesystem in Arizona that uses Cyverse credentials from a different authorization flow.
+* one Docker container with our Jupyter Notebook (if you were developing locally, this would represent your own laptop) communicating via HTTPS that is using our Agave credentials through OAuth2
+* Stampede at TACC communicating via SSH using a demo account
+* and a public storage system on Corral, which is a multi-petabyte GPFS filesystem at TACC.
 
 ## Data movement
 
 We haven't told Agave anything about our Jupyter Notebook instance, but we do have CLI tools installed (We actually have a Python library as well that can interact directly with the APIs, but we won't play with that today).  In this case, the "files-upload" command will take files stored locally and upload them to a system that Agave knows about.  Let's move our system description from the previous Hand-on example to the home directory of our shiny new Agave system.  Your file and system names will be different, but the command should look something like this:
 
 ```
-files-upload -F path/to/system-description.json -S akes2016-storage-USERNAME ./
+files-upload -F path/to/system-description.json -S stampede-storage-XSEDE16-${USERNAME} ./
 ```
 
 Can you see it on the system now?
 
 ```
-files-list -S akes2016-storage-USERNAME ./
+files-list -S stampede-storage-XSEDE16-${USERNAME} ./
 ```
 
 Let's make a copy under a different name?
 
 ```
-files-copy -D ./system-copy.json -S akes2016-storage-USERNAME ./system-description.json
+files-copy -D ./system-copy.json -S stampede-storage-XSEDE16-${USERNAME} ./system-description.json
 ```
 
 Or we can just move it.
 
 ```
-files-move -D ./system-moved.json -S akes2016-storage-USERNAME ./system-description.json
+files-move -D ./system-moved.json -S stampede-storage-XSEDE16-${USERNAME} ./system-description.json
 ```
 
 We can bring in any publically accessible data from the web.  Just to be meta, let's import this very tutorial from GitHub:
 
 ```
-files-import -U https://raw.githubusercontent.com/johnfonner/AKES2016/master/systems.md -S akes2016-storage-USERNAME ./
+files-import -U https://raw.githubusercontent.com/johnfonner/XSEDE16/master/systems.md -S stampede-storage-XSEDE16-${USERNAME} ./
 ```
 
-And finally, we can move our own files between Agave systems by specifying the source with the "agave://" notation.  Try moving system.md from our Jetstream system to the DataStore
+And finally, we can move our own files between Agave systems by specifying the source with the "agave://" notation.  Try moving system.md from our Stampede system to the shared Corral system
 
 ```
-files-import -U agave://akes2016-storage-USERNAME/systems.md -S data.iplantcollaborative.org CYVERSE-USERNAME/
+files-import -U agave://stampede-storage-XSEDE16-${USERNAME}/systems.md -S corral.demo ${USERNAME}/
 ```
 
 ## Hands-on
