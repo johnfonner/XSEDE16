@@ -53,7 +53,7 @@ Create a file `test.txt`
 
 ```sh
 query1="testInput.txt"
-bash wrapper.txt
+wrapper.txt
 ```
 
 ### The app description
