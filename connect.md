@@ -21,12 +21,7 @@ systems-list
 You should get a list of some system names such as "corral.tacc.utexas.edu".
 
 
-## Hosted Docker
-
-For the sake of simplicity, we will use an in-browser shell to explore Docker.  This is cheating a bit on the "no command line" rule, but you can reproduce what we do in the workshop using Kitematic or other available apps.  For today, we don't want to require using your laptop for development, but as you continue to work with Docker, having it on your own laptop is terribly convenient.
-
-
-# Resources for working with Docker and the Agave API on your own 
+# Resources for working with the Agave API on your own 
 
 ## Command line access
 
@@ -41,7 +36,6 @@ source ~/.bashrc
 
 A full explanation of the tools, installation, and example uses is available [on Bitbucket here](https://bitbucket.org/agaveapi/cli)
 
-## Docker
 
 # Using the Agave API
 
