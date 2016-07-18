@@ -43,6 +43,7 @@ Create this file as `wrapper.txt`:
 
 ```sh
 wc ${query1} > wc_out.txt
+bash wrapper.txt
 ```
 
 Within a wrapper script, you can reference the ID of any Agave input or parameter from the app description.  Before executing a wrapper script, Agave will look for the these references and substitute in whatever was that value was.  This will make more sense once we start running jobs, but this is the way we connect what you tell the Agave API that you want to do and what actually runs on the execution system.  The other thing Agave will do with the wrapper script is prepend all the scheduler information necessary to run the script on the execution system.

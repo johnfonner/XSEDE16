@@ -12,34 +12,13 @@ Once you have logged in, please open a new "bash" Notebook.
 
 ![Bash Notebook](images/jupyter-bash.png)
 
-Once you have a notebook, test that everything is working with this command:
+Once you have a notebook, we need to run an obscure command to fix a configuration problem.  This step will go away, but as of the workshop, the bug still exists.
 
 ```
-systems-list
+mkdir ~/agave
+cp ~/.agave/current ~/agave/current
+export AGAVE_CACHE_DIR="/home/jupyter/agave"
 ```
-
-You should get a list of a few system names such as "storage.xsede16".
-
-
-# Resources for working with the Agave API on your own 
-
-## Command line access
-
-We already have this installed for you within the JupyterHub we will be using, but there is a great set of command-line utilities for the Agave API on BitBucket.  They only require bash and Python's JSON tool to work, which, if you are on a Linux or Mac system is probably already there.  Pull down the tools using git:
-
-```
-git clone https://bitbucket.org/agaveapi/cli.git
-cd cli
-echo "PATH=\$PATH:\$PWD/bin" >> ~/.bashrc
-source ~/.bashrc
-```
-
-A full explanation of the tools, installation, and example uses is available [on Bitbucket here](https://bitbucket.org/agaveapi/cli)
-
-
-# Using the Agave API
-
-If you use the hosted JupyterHub instance, it passes your token to the underlying Python or Bash tools when you login.  If you are accessing the Agave API on your own, you need to follow the instructions below on selecting a tenant and setting up a client.
 
 ## Selecting a tenant
 
@@ -84,5 +63,30 @@ auth-tokens-refresh -S
 ```
 
 This topic is covered in great detail at [Authorization Guide](http://agaveapi.co/documentation/authorization-guide/) in the Agave live docs
+
+## Testing Authentication
+
+Once that is set, test that everything is working with this command:
+
+```
+systems-list
+```
+
+You should get a list of a few system names such as "storage.xsede16".
+
+# Resources for working with the Agave API on your own 
+
+## Command line access
+
+We already have this installed for you within the JupyterHub we will be using, but there is a great set of command-line utilities for the Agave API on BitBucket.  They only require bash and Python's JSON tool to work, which, if you are on a Linux or Mac system is probably already there.  Pull down the tools using git:
+
+```
+git clone https://bitbucket.org/agaveapi/cli.git
+cd cli
+echo "PATH=\$PATH:\$PWD/bin" >> ~/.bashrc
+source ~/.bashrc
+```
+
+A full explanation of the tools, installation, and example uses is available [on Bitbucket here](https://bitbucket.org/agaveapi/cli)
 
 
