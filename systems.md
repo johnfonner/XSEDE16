@@ -65,7 +65,7 @@ Execution systems in Agave are very similar to storage systems.  They just have 
     "status": "UP",
     "type": "EXECUTION",
     "executionType": "HPC",
-    "startupScript": "",
+    "scheduler": "SLURM",
     "environment": null,
     "login": {
         "auth": {
